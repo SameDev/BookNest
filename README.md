@@ -18,8 +18,12 @@ Hospedagem: Vercel
 - Clone este repositório para sua máquina local.
 - Configure o ambiente de desenvolvimento para o front-end e back-end seguindo as instruções nos respectivos diretórios.
 - Instale as dependências necessárias para o front-end e back-end.
+  ```bash
+  npm i
 - Configure o banco de dados e migre as tabelas necessárias.
 - Inicie o servidor de desenvolvimento para o front-end e back-end.
+  ```bash
+  npm run dev
 
 ## Contribuição
 Se você deseja contribuir com este projeto, siga as etapas abaixo:
