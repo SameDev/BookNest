@@ -3,6 +3,19 @@ const app = express();
 const bodyParser = require('body-parser');
 const path = require('path');
 
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.0.0/firebase-SERVICE.js";
+
+var config = {
+  apiKey: process.env.API_KEY,
+  authDomain: process.env.AUTH_DOMAIN,
+  projectId: process.env.PROJECT_ID,
+  storageBucket: process.env.STORAGE_BUCKET,
+  messagingSenderId: process.env.MESSAGING_SENDER_ID,
+  appId: process.env.APP_ID
+};
+
+const firebaseApp = initializeApp(config);
+
 // Configurando o body-parser para lidar com o corpo das requisições
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
