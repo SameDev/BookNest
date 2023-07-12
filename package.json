@@ -9,7 +9,10 @@
   "author": "SameDev",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.18.2"
+    "body-parser": "^1.20.2",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "firebase": "^10.0.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"
