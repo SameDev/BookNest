@@ -1,0 +1,17 @@
+{
+  "name": "petcare-connect",
+  "version": "1.0.0",
+  "description": "PetCare Connect é uma plataforma web que conecta proprietários de animais de estimação a serviços de cuidados para pets, facilitando a busca e o agendamento de serviços como veterinários, pet shops, hotéis para animais, passeadores de cães, e muito mais. A plataforma permite que os usuários encontrem e contratem serviços de qualidade para atender às necessidades de seus animais de estimação.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js"
+  },
+  "author": "SameDev",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
