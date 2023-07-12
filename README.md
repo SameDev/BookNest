@@ -1,4 +1,4 @@
-# BookNest
+# PetCare Connect
 PetCare Connect é uma plataforma web que conecta proprietários de animais de estimação a serviços de cuidados para pets, facilitando a busca e o agendamento de serviços como veterinários, pet shops, hotéis para animais, passeadores de cães, e muito mais. A plataforma permite que os usuários encontrem e contratem serviços de qualidade para atender às necessidades de seus animais de estimação.
 
 ## Funcionalidades Principais
