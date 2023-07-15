@@ -1,58 +1,88 @@
 const express = require('express');
+const session = require('express-session');
 const app = express();
 const bodyParser = require('body-parser');
 const path = require('path');
+const fs = require('fs');
 
-import {initializeApp} from "https://www.gstatic.com/firebasejs/10.0.0/firebase-SERVICE.js";
+const { auth, firestore } = require('./firebase');
 
-var config = {
-  apiKey: process.env.API_KEY,
-  authDomain: process.env.AUTH_DOMAIN,
-  projectId: process.env.PROJECT_ID,
-  storageBucket: process.env.STORAGE_BUCKET,
-  messagingSenderId: process.env.MESSAGING_SENDER_ID,
-  appId: process.env.APP_ID
-};
+app.use(session({ secret: 'jufdju2ei88228c=dhdggfyejf' }));
 
-const firebaseApp = initializeApp(config);
-
-// Configurando o body-parser para lidar com o corpo das requisições
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// Configurando o diretório das views e o mecanismo de template EJS
-app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// Rota para a página inicial
+const viewsDir = path.join(__dirname, 'views');
+const viewFiles = fs.readdirSync(viewsDir);
+
 app.get('/', (req, res) => {
-  res.render('index');
+  res.render(path.join(viewsDir, 'index'));
 });
 
-// Rota para o registro de usuários
-app.post('/usuarios', (req, res) => {
-  const { nome, email } = req.body;
-
-  // Lógica para criar um novo usuário no banco de dados
-  // ...
-
-  res.status(201).json({ message: 'Usuário criado com sucesso!' });
+viewFiles.forEach((file) => {
+  const route = '/' + path.parse(file).name;
+  app.get(route, (req, res) => {
+    res.render(path.join(viewsDir, file));
+  });
 });
 
-// Rota para pesquisa de serviços
+app.post('/usuarios', async (req, res) => {
+  try {
+    const { nome, email, senha, acao } = req.body;
+
+    if (acao === 'login') {
+      try {
+        const userCredential = await auth.signInWithEmailAndPassword(email, senha);
+        const user = userCredential.user;
+        console.log('Usuário autenticado:', user.uid);
+        res.redirect('/dashboard');
+      } catch (error) {
+        console.error('Erro ao autenticar usuário:', error);
+        throw error;
+      }
+    } else if (acao === 'cadastro') {
+      try {
+        const userCredential = await auth.createUserWithEmailAndPassword(email, senha);
+        const user = userCredential.user;
+        console.log('Usuário cadastrado:', user.uid);
+        res.redirect('/dashboard');
+      } catch (error) {
+        console.error('Erro ao cadastrar usuário:', error);
+        throw error;
+      }
+    } else {
+      res.status(400).json({ message: 'Ação inválida' });
+    }
+  } catch (error) {
+    console.error('Erro ao criar ou autenticar usuário:', error);
+    res.status(500).json({ message: 'Erro ao criar ou autenticar usuário' });
+  }
+});
+
+app.get('/dashboard', (req, res) => {
+  // Verificação da sessão de usuário
+  if (!req.session.userId) {
+    res.redirect('/');
+    return;
+  }
+  
+  const userId = req.session.userId;
+
+});
+
 app.get('/servicos', (req, res) => {
   const { tipo } = req.query;
+  const servicos = []; // Exemplo de array de serviços
 
   // Lógica para buscar serviços no banco de dados com base no tipo
   // ...
 
-  const servicos = []; // Exemplo de array de serviços
-
   res.json(servicos);
 });
 
-// Iniciando o servidor
-const port = process.env.PORT || 3000;
+const port = 3000;
 app.listen(port, () => {
   console.log(`Servidor rodando na porta ${port}`);
 });
