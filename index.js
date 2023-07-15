@@ -5,7 +5,24 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const fs = require('fs');
 
-const { auth, firestore } = require('./firebase');
+const { firestore } = require('./firebaseAdmin');
+
+const { initializeApp } = require('firebase/app')
+const { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword} = require('firebase/auth')
+
+const auth = getAuth
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBeX-2DPk6F_ab-stDp7sN2FyxO5vuhngA",
+  authDomain: "petcare-connect.firebaseapp.com",
+  projectId: "petcare-connect",
+  storageBucket: "petcare-connect.appspot.com",
+  messagingSenderId: "737625730700",
+  appId: "1:737625730700:web:257c17a87c72241a6555a9"
+};
+
+// Initialize Firebase
+const fireApp = initializeApp(firebaseConfig);
 
 app.use(session({ secret: 'jufdju2ei88228c=dhdggfyejf' }));
 
@@ -14,7 +31,7 @@ app.use(bodyParser.json());
 
 app.set('view engine', 'ejs');
 
-const viewsDir = path.join(__dirname, 'views');
+const viewsDir = path.join(__dirname+'/src/views/');
 const viewFiles = fs.readdirSync(viewsDir);
 
 app.get('/', (req, res) => {
@@ -34,7 +51,7 @@ app.post('/usuarios', async (req, res) => {
 
     if (acao === 'login') {
       try {
-        const userCredential = await auth.signInWithEmailAndPassword(email, senha);
+        const userCredential = await signInWithEmailAndPassword(auth, email, senha);
         const user = userCredential.user;
         console.log('Usuário autenticado:', user.uid);
         res.redirect('/dashboard');
@@ -44,8 +61,10 @@ app.post('/usuarios', async (req, res) => {
       }
     } else if (acao === 'cadastro') {
       try {
-        const userCredential = await auth.createUserWithEmailAndPassword(email, senha);
+        const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
+        console.log(userCredential)
         const user = userCredential.user;
+        session.Store(user)
         console.log('Usuário cadastrado:', user.uid);
         res.redirect('/dashboard');
       } catch (error) {
@@ -82,7 +101,7 @@ app.get('/servicos', (req, res) => {
   res.json(servicos);
 });
 
-const port = 3000;
+const port = 4000;
 app.listen(port, () => {
   console.log(`Servidor rodando na porta ${port}`);
 });
