@@ -5,12 +5,11 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const fs = require('fs');
 
-const { firestore } = require('./firebaseAdmin');
+// Firebase
+const { firestore, db } = require('./src/firebaseAdmin');
 
-const { initializeApp } = require('firebase/app')
-const { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword} = require('firebase/auth')
-
-const auth = getAuth
+const { initializeApp } = require('firebase/app');
+const Auth = require('firebase/auth');
 
 const firebaseConfig = {
   apiKey: "AIzaSyBeX-2DPk6F_ab-stDp7sN2FyxO5vuhngA",
@@ -20,17 +19,18 @@ const firebaseConfig = {
   messagingSenderId: "737625730700",
   appId: "1:737625730700:web:257c17a87c72241a6555a9"
 };
-
-// Initialize Firebase
 const fireApp = initializeApp(firebaseConfig);
+const auth = Auth.getAuth();
 
-app.use(session({ secret: 'jufdju2ei88228c=dhdggfyejf' }));
+const google = new Auth.GoogleAuthProvider();
 
+// Inicializar Sessão
+app.use(session({ secret: 'jufdju2ei88228c=dhdggfyejf', resave: false, saveUninitialized: true }));
+
+// Gerenciamento de rotas
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
 app.set('view engine', 'ejs');
-
 const viewsDir = path.join(__dirname+'/src/views/');
 const viewFiles = fs.readdirSync(viewsDir);
 
@@ -40,20 +40,37 @@ app.get('/', (req, res) => {
 
 viewFiles.forEach((file) => {
   const route = '/' + path.parse(file).name;
+  if (route == '/dashboard') {
+    app.get('/dashboard', (req, res) => {
+      // Verificação da sessão de usuário
+      if (!req.session.userId) {
+        res.redirect('/');
+        return;
+      }
+      
+      const userId = req.session.userId;
+      res.render(path.join(viewsDir, 'dashboard'), { userId });
+    });
+  }
   app.get(route, (req, res) => {
     res.render(path.join(viewsDir, file));
   });
 });
 
+// Autenticação
 app.post('/usuarios', async (req, res) => {
   try {
-    const { nome, email, senha, acao } = req.body;
+    const { nome, email, senha, data, acao } = req.body;
 
     if (acao === 'login') {
       try {
-        const userCredential = await signInWithEmailAndPassword(auth, email, senha);
+        const userCredential = await Auth.signInWithEmailAndPassword(auth, email, senha);
         const user = userCredential.user;
         console.log('Usuário autenticado:', user.uid);
+        console.log(userCredential)
+        // Armazenar o userId na sessão
+        req.session.userId = user.uid;
+        
         res.redirect('/dashboard');
       } catch (error) {
         console.error('Erro ao autenticar usuário:', error);
@@ -61,10 +78,17 @@ app.post('/usuarios', async (req, res) => {
       }
     } else if (acao === 'cadastro') {
       try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
-        console.log(userCredential)
+        const userCredential = await Auth.createUserWithEmailAndPassword(auth, email, senha);
         const user = userCredential.user;
-        session.Store(user)
+        
+        // Armazenar o userId na sessão
+        req.session.userId = user.uid;
+
+         // Armazenar os dados do usuário na coleção "usuarios"
+         const userDocRef = db.collection('usuarios').doc(user.uid);
+         const userData = { nome, email, id: user.uid, data };
+         await userDocRef.set(userData);
+
         console.log('Usuário cadastrado:', user.uid);
         res.redirect('/dashboard');
       } catch (error) {
@@ -80,16 +104,12 @@ app.post('/usuarios', async (req, res) => {
   }
 });
 
-app.get('/dashboard', (req, res) => {
-  // Verificação da sessão de usuário
-  if (!req.session.userId) {
-    res.redirect('/');
-    return;
-  }
-  
-  const userId = req.session.userId;
-
+app.post('/logout', async (req, res) => {
+  req.session.destroy()
+  res.redirect('/')
 });
+
+// Listar serviços
 
 app.get('/servicos', (req, res) => {
   const { tipo } = req.query;
