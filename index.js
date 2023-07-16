@@ -34,6 +34,10 @@ app.set('view engine', 'ejs');
 const viewsDir = path.join(__dirname+'/src/views/');
 const viewFiles = fs.readdirSync(viewsDir);
 
+app.use('/static', express.static(__dirname + '/src/public/'));
+
+
+
 app.get('/', (req, res) => {
   res.render(path.join(viewsDir, 'index'));
 });
