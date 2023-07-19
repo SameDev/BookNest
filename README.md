@@ -34,5 +34,8 @@ Se você deseja contribuir com este projeto, siga as etapas abaixo:
 - Faça push para o branch: git push origin minha-feature.
 - Abra um Pull Request.
 
+## Cŕeditos
+- https://www.behance.net/gallery/168300229/Pet-Hotel-Landing-page-for-pet-care-center/modules/949265849 (Design Base)
+
 ## Licença
 Este projeto está licenciado sob a licença MIT.
