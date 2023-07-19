@@ -1,9 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Poppins:wght@300;400;500;600;700&display=swap');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: var(--font-primary);
+    font-size: 13.5pt;
 
+    /* Variaveis de Estilização*/
+    --primary: #FEC749;
+    --secondary: #0180A9;
+    --bg: #FAF9FE;
+    --beige: #FDF4D7;
+    --gray: #696A6E;
+    --black: #000000;
 
-    /*var*/
-    --yellow: #FEC749;
+    --font-primary: 'Poppins', sans-serif;
+    --font-title: 'Abril Fatface', cursive;
+}
+
+body {
+    height: 100%;
+    overflow-x: hidden;
+    background-color: var(--bg);
+}
+
+h1 {
+    font-weight: 400;
+    font-size: 30pt;
+    font-family: var(--font-title);
+}
+
+.w100 {
+    width: 100%;
+    padding:0 10px;
+}
+
+.w50 {
+    width: 50%;
+    padding:0 10px;
+}
+
+.w25 {
+    width: 25%;
+    padding:0 10px;
+}
+
+.w33 {
+    width: 33.3%;
+    padding:0 10px;
+}
+input[type=text],
+input[type=button],
+input[type=submit],
+input[type=password],
+textarea{
+	-webkit-appearance: none;
+    appearance: none;
+}
+input{
+	outline: 0;
+}
+
+img{
+	width: 100%;
+	max-width: 400px;
+}
+
+.text-center{
+	text-align: center;
+}
+
+.center{
+	max-width: 1280px;
+	padding:0 2%;
+	margin:0 auto;
+}
+
+.left{
+	float: left;
+}
+
+.right{
+	float: right;
+}
+
+.clear{
+	clear: both;
+}
+
+/* COMPONENTS */
+
+input {
+    padding: 15px 26px;
+    border: 2px solid var(--black);
+    border-radius: 40px;
+    display: block;
+    font-size: 15pt;
+    width: 100%;
+}
+
+label {
+    margin: 15px 0;
+    margin-left: 28px;
+    
+}
+
+.btn {
+    display: block;
+    padding: 15px 20px;
+
+    color: var(--black);
+    background-color: var(--primary);
+
+    text-decoration: none;
+    font-family: var(--font-primary);
+    font-weight: 500;
+    cursor: pointer;
+
+    border: 2px solid var(--black);
+    border-radius: 40px;
+    box-shadow: var(--black) 2px 2px;
+    
 }

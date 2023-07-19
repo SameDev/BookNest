@@ -5,24 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Faça Seu Login</title>
 
-  <link rel="stylesheet" href="../css/style.css">
-  <style>
-    h1{
-      color: var(--yellow);
-    }
-  </style>
+  <link rel="stylesheet" href="http://localhost:4000/static/css/style.css">
+  <link rel="stylesheet" href="http://localhost:4000/static/css/login.css">
 </head>
 <body>
-  <h1>Login</h1>
+  <div class="box-login">
+    <a href="../"><i class="fa-solid fa-arrow-left"></i> Voltar</a>
+    <form method="POST" class="left w50" action="/usuarios">
+      <h1>Login</h1>
+      <label for="email"><i class="fa-solid fa-envelope"></i> E-mail:</label>
+      <input type="email" id="email" name="email" required>
+      
+      <label for="senha"><i class="fa-solid fa-lock"></i> Senha:</label>
+      <input type="password" id="senha" name="senha" required>
   
-  <form method="POST" action="/usuarios">
-    <label for="email">E-mail:</label>
-    <input type="email" id="email" name="email" required>
-    
-    <label for="senha">Senha:</label>
-    <input type="password" id="senha" name="senha" required>
+      <button class="btn" type="submit" name="acao" value="login"><i class="fa-solid fa-right-to-bracket"></i> Login</button>
+    </form>
+    <div class="box-hero w50 right">
+      <img class="right" src="http://localhost:4000/static/images/cachorro-com-oculos.png" alt="cachorro-com-oculos">
+    </div>
+    <div class="clear"></div>
+  </div>
 
-    <button type="submit" name="acao" value="login">Login</button>
-  </form>
+  <script src="https://kit.fontawesome.com/d9dda7c4a9.js" crossorigin="anonymous"></script>
 </body>
 </html>

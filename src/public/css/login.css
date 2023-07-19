@@ -1,0 +1,48 @@
+.box-login {
+    background-color: var(--beige);
+    padding: 140px 20px;
+    margin: 40px;
+    border-radius: 50px;
+    border: 2px solid var(--black);
+    box-shadow: 2px 2px var(--black);
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.box-login a {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    margin: 25px;
+    color: var(--black);
+    font-weight: bold;
+    text-decoration: none;
+}
+
+form {
+    height: 100% !important;
+    flex: 1; /* Ocupar todo o espaço disponível */
+    padding: 20px;
+}
+
+form h1 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+button {
+    margin-top: 5px;
+    width: 100%;
+}
+
+.box-hero {
+    flex: 1; /* Ocupar todo o espaço disponível */
+    position: relative;
+    overflow: hidden; /* Evitar que a imagem vaze */
+}
+
+.box-hero img {
+    object-fit: cover;
+}
