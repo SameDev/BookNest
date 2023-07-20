@@ -4,6 +4,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const path = require('path');
 const fs = require('fs');
+require('dotenv').config();
 
 // Firebase
 const { firestore, db } = require('./src/firebaseAdmin');
@@ -12,12 +13,12 @@ const { initializeApp } = require('firebase/app');
 const Auth = require('firebase/auth');
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBeX-2DPk6F_ab-stDp7sN2FyxO5vuhngA",
-  authDomain: "petcare-connect.firebaseapp.com",
-  projectId: "petcare-connect",
-  storageBucket: "petcare-connect.appspot.com",
-  messagingSenderId: "737625730700",
-  appId: "1:737625730700:web:257c17a87c72241a6555a9"
+  apiKey: process.env.API_KEY,
+  authDomain: process.env.AUTH_DOMAIN,
+  projectId: process.env.PROJECT_ID,
+  storageBucket: process.env.STORAGE_BUCKET,
+  messagingSenderId: process.env.MESSAGING_SENDER_ID,
+  appId: process.env.APP_ID
 };
 const fireApp = initializeApp(firebaseConfig);
 const auth = Auth.getAuth();
