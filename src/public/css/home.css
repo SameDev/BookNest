@@ -1,0 +1,35 @@
+.box-home {
+    background-color: var(--beige);
+    padding: 140px 528px;
+    margin: 40px 100px;
+    border-radius: 50px;
+    border: 2px solid var(--black);
+    box-shadow: 2px 2px var(--black);
+    text-align: center;
+    position: relative;
+}
+
+.box-home h1{ 
+    margin-bottom: 10px;
+}
+
+.box-home a.btn {
+    display: block;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 10px;
+}
+@media screen and (max-width: 1500px) {
+    .box-home {
+        padding: 140px 400px;
+        margin: 40px !important;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .box-home {
+        padding: 140px 20px;
+        margin: 40px !important;
+    }
+}
+

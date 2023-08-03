@@ -107,7 +107,6 @@ label {
 }
 
 .btn {
-    display: block;
     padding: 15px 20px;
 
     color: var(--black);
