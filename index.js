@@ -22,7 +22,7 @@ const firebaseConfig = {
 };
 const fireApp = initializeApp(firebaseConfig);
 const auth = Auth.getAuth();
-
+//teste
 const google = new Auth.GoogleAuthProvider();
 
 // Inicializar Sessão
