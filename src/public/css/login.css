@@ -1,12 +1,12 @@
 .box-login {
+    display: flex;
+    align-items: center;
     background-color: var(--beige);
     padding: 58px 20px;
     margin: 40px;
     border-radius: 50px;
     border: 2px solid var(--black);
     box-shadow: 2px 2px var(--black);
-    display: flex;
-    align-items: center;
     position: relative;
 }
 
@@ -14,7 +14,6 @@
     position: absolute;
     top: 0;
     left: 0;
-
     margin: 25px;
     color: var(--black);
     font-weight: bold;
@@ -23,7 +22,7 @@
 
 form {
     height: 100% !important;
-    flex: 1; /* Ocupar todo o espaço disponível */
+    flex: 2;
     padding: 20px;
 }
 
@@ -38,11 +37,15 @@ button {
 }
 
 .box-hero {
-    flex: 1; /* Ocupar todo o espaço disponível */
+    flex: 1;
     position: relative;
-    overflow: hidden; /* Evitar que a imagem vaze */
+    overflow: hidden;
+    display: flex;
+    justify-content: flex-end; /* Alinhar a imagem à direita */
 }
 
 .box-hero img {
     object-fit: cover;
+    min-width: 100%; /* Garantir que a imagem ocupe pelo menos a largura da caixa */
+    min-height: 100%; /* Garantir que a imagem ocupe pelo menos a altura da caixa */
 }

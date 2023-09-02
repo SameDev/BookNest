@@ -1,0 +1,36 @@
+header {
+    width: 100%;
+    padding: 15px 0;
+    background-color: var(--bg-dark);
+}
+
+header .center {
+    display: flex;
+}
+
+header .center .logo {
+    color: white;
+    flex: 11;
+}
+
+header .center .logo h2 {
+    font-weight: bold !important;
+    font-size: 20pt;
+}
+
+button.notification {
+    margin-right: 10px;
+}
+
+form {
+    flex: 1;
+}
+
+button {
+    margin-top: 10px;
+    font-weight: bold;
+    color: white;
+    background: none;
+    border: 0;
+    cursor: pointer;
+}

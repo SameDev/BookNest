@@ -1,14 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
+
+    <link rel="stylesheet" href="http://localhost:4000/static/css/style.css">
+    <link rel="stylesheet" href="http://localhost:4000/static/css/dashboard.css">
 </head>
 <body>
-    <form action="/logout" method="post">
-        <button>Sair</button>
-    </form>
-    <%= userId %>
+    <header>
+        
+        <div class="center">
+            <div class="logo">
+                <h2><i class="fa-solid fa-shield-dog"></i> PetCare Connect</h2>
+            </div>
+            <form action="/logout" method="post">
+                <button><i class="fa-solid fa-user-xmark"></i></button>
+            </form>
+
+        </div>
+    </header>
+
+    <div class="center">
+        <%= user.uid %>
+        <%= user.email %>
+    </div>
+    
+    <script src="https://kit.fontawesome.com/d9dda7c4a9.js" crossorigin="anonymous"></script>
+    <script src="http://localhost:4000/static/js/notification.js"></script>
 </body>
 </html>

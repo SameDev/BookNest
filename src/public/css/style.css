@@ -13,6 +13,7 @@
     --bg: #FAF9FE;
     --beige: #FDF4D7;
     --gray: #696A6E;
+    --bg-dark: #1D1D1D; 
     --black: #000000;
 
     --font-primary: 'Poppins', sans-serif;
@@ -72,7 +73,7 @@ img{
 }
 
 .center{
-	max-width: 1280px;
+	max-width: 1800px;
 	padding:0 2%;
 	margin:0 auto;
 }

@@ -48,13 +48,13 @@ viewFiles.forEach((file) => {
   if (route == '/dashboard') {
     app.get('/dashboard', (req, res) => {
       // Verificação da sessão de usuário
-      if (!req.session.userId) {
+      if (!req.session.user.uid) {
         res.redirect('/');
         return;
       }
       
-      const userId = req.session.userId;
-      res.render(path.join(viewsDir, 'dashboard'), { userId });
+      const user = req.session.user;
+      res.render(path.join(viewsDir, 'dashboard'), { user });
     });
   }
   app.get(route, (req, res) => {
@@ -74,7 +74,7 @@ app.post('/usuarios', async (req, res) => {
         console.log('Usuário autenticado:', user.uid);
         console.log(userCredential)
         // Armazenar o userId na sessão
-        req.session.userId = user.uid;
+        req.session.user = user;
         
         res.redirect('/dashboard');
       } catch (error) {
@@ -86,8 +86,8 @@ app.post('/usuarios', async (req, res) => {
         const userCredential = await Auth.createUserWithEmailAndPassword(auth, email, senha);
         const user = userCredential.user;
         
-        // Armazenar o userId na sessão
-        req.session.userId = user.uid;
+        // Armazenar o user na sessão
+        req.session.user = user;
 
          // Armazenar os dados do usuário na coleção "usuarios"
          const userDocRef = db.collection('usuarios').doc(user.uid);
