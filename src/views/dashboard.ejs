@@ -1,3 +1,13 @@
+<% 
+if (user.cargo === 1) {
+    var cargo = "Administrador"
+    
+} else {
+    var cargo = "Cliente"
+}
+
+%>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -21,13 +31,35 @@
 
         </div>
     </header>
+    <div class="sidebar">
+        <div class="user-data">
+            <% if (user.img) {
+                %> <img src="<%=user.img%>" alt="Imagem do Usuario"> <%
+            }
+            else {
+                %> <img src="http://localhost:4000/static/images/user.png" alt="Imagem de Usuario"><%
+            }
+            %>
+            <h2><%=user.nome%></h2>
+            <p><%= cargo %></p>
+        </div>
+        <div class="list-items">
+            <h2><i class="fa-solid fa-list"></i> Serviços</h2>
+            <ul>
+                <li><a href="/servicos"><i class="fa-solid fa-address-book"></i> Meus Serviços</a></li>
+                <li><a href="/servicos"><i class="fa-solid fa-rectangle-list"></i> Todos Serviços</a></li>
+                <% if (user.cargo == 1) {%>
+                    <li><a href="/servicos"><i class="fa-solid fa-circle-plus"></i> Adicionar Novo</a></li>
+                <% } %>
+            </ul> 
+        </div>
+
+    </div>
 
     <div class="center">
-        <%= user.uid %>
-        <%= user.email %>
+
     </div>
     
     <script src="https://kit.fontawesome.com/d9dda7c4a9.js" crossorigin="anonymous"></script>
-    <script src="http://localhost:4000/static/js/notification.js"></script>
 </body>
 </html>

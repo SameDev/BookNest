@@ -15,13 +15,14 @@
     --gray: #696A6E;
     --bg-dark: #1D1D1D; 
     --black: #000000;
+    --secondary-dark: #015da9;
 
     --font-primary: 'Poppins', sans-serif;
     --font-title: 'Abril Fatface', cursive;
 }
 
 body {
-    height: 100%;
+    height: 100vh;
     overflow-x: hidden;
     background-color: var(--bg);
 }

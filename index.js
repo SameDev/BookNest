@@ -48,7 +48,7 @@ viewFiles.forEach((file) => {
   if (route == '/dashboard') {
     app.get('/dashboard', (req, res) => {
       // Verificação da sessão de usuário
-      if (!req.session.user.uid) {
+      if (!req.session.user.id) {
         res.redirect('/');
         return;
       }
@@ -73,10 +73,20 @@ app.post('/usuarios', async (req, res) => {
         const user = userCredential.user;
         console.log('Usuário autenticado:', user.uid);
         console.log(userCredential)
-        // Armazenar o userId na sessão
-        req.session.user = user;
+    
+        const typeUser = db.collection('usuarios').doc(user.uid);
+        const userDoc = await typeUser.get();
         
-        res.redirect('/dashboard');
+        if (userDoc.exists) {
+          // Os dados do documento estão disponíveis em userDoc.data()
+          const userData = userDoc.data();
+          console.log(userData);
+
+          req.session.user = userData;
+          res.redirect('/dashboard');
+        } else {
+          console.log("O documento não existe.");
+        }
       } catch (error) {
         console.error('Erro ao autenticar usuário:', error);
         throw error;
@@ -85,16 +95,14 @@ app.post('/usuarios', async (req, res) => {
       try {
         const userCredential = await Auth.createUserWithEmailAndPassword(auth, email, senha);
         const user = userCredential.user;
-        
-        // Armazenar o user na sessão
-        req.session.user = user;
 
          // Armazenar os dados do usuário na coleção "usuarios"
          const userDocRef = db.collection('usuarios').doc(user.uid);
-         const userData = { nome, email, id: user.uid, data };
+         const userData = { nome, email, cargo: 2, id: user.uid, data};
          await userDocRef.set(userData);
 
-        console.log('Usuário cadastrado:', user.uid);
+        req.session.user = userData;
+        console.log('Usuário cadastrado:', user.id);
         res.redirect('/dashboard');
       } catch (error) {
         console.error('Erro ao cadastrar usuário:', error);
@@ -112,18 +120,6 @@ app.post('/usuarios', async (req, res) => {
 app.post('/logout', async (req, res) => {
   req.session.destroy()
   res.redirect('/')
-});
-
-// Listar serviços
-
-app.get('/servicos', (req, res) => {
-  const { tipo } = req.query;
-  const servicos = []; // Exemplo de array de serviços
-
-  // Lógica para buscar serviços no banco de dados com base no tipo
-  // ...
-
-  res.json(servicos);
 });
 
 const port = 4000;

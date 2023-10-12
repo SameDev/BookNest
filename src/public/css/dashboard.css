@@ -34,3 +34,42 @@ button {
     border: 0;
     cursor: pointer;
 }
+
+.sidebar {
+    background-color: var(--secondary);
+    width: 300px;
+    height: 100%;
+
+   
+    color: var(--bg);
+}
+
+.sidebar .user-data {
+    text-align: center;
+    padding: 20px;
+}
+
+.sidebar .user-data img {
+    width: 50%;
+    border-radius: 50%;
+}
+
+.list-items h2 {
+    background-color: var(--secondary-dark);
+    padding: 10px;
+}
+
+.list-items ul {
+    list-style: none;
+}
+
+.list-items ul li {
+    padding: 10px 40px;
+    background-color: #05518f;
+    border-bottom: 1px solid #013b6b;
+}
+
+.list-items ul li a {
+    color: var(--bg);
+    text-decoration: none;
+}
