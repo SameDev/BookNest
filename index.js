@@ -60,7 +60,7 @@ viewFiles.forEach((file) => {
   app.get(route, (req, res) => {
     res.render(path.join(viewsDir, file));
   });
-});
+  });
 
 // Autenticação
 app.post('/usuarios', async (req, res) => {
