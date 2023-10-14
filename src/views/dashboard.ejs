@@ -6,69 +6,88 @@ if (user.cargo === 1) {
     var cargo = "Cliente"
 }
 %>
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <!DOCTYPE html>
+    <html lang="pt-BR">
 
-    <link rel="stylesheet" href="http://localhost:4000/static/css/style.css">
-    <link rel="stylesheet" href="http://localhost:4000/static/css/dashboard.css">
-</head>
-<body>
-    <header>
-        
-        <div class="center">
-            <div class="logo">
-                <h2><i class="fa-solid fa-shield-dog"></i> PetCare Connect</h2>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Dashboard</title>
+
+        <link rel="stylesheet" href="http://localhost:4000/static/css/style.css">
+        <link rel="stylesheet" href="http://localhost:4000/static/css/dashboard.css">
+    </head>
+
+    <body>
+        <header>
+
+            <div class="center">
+                <div class="logo">
+                    <h2><i class="fa-solid fa-shield-dog"></i> PetCare Connect</h2>
+                </div>
+                <form action="/logout" method="post">
+                    <button><i class="fa-solid fa-user-xmark"></i></button>
+                </form>
+
             </div>
-            <form action="/logout" method="post">
-                <button><i class="fa-solid fa-user-xmark"></i></button>
-            </form>
+        </header>
+        <div class="container">
+            <div class="sidebar">
+                <div class="user-data">
+                    <% if (user.img) {
+                    %> <img src="<%=user.img%>" alt="Imagem do Usuário">
+                        <%
+                }
+                else {
+                    %> <img src="http://localhost:4000/static/images/user.png" alt="Imagem de Usuário">
+                            <%
+                }
+                %>
+                                <h2>
+                                    <%=user.nome%>
+                                </h2>
+                                <p>
+                                    <%= cargo %>
+                                </p>
+                </div>
+                <div class="list-items">
+                    <div class="block">
+                        <h2><i class="fa-solid fa-list"></i> Serviços</h2>
+                        <ul>
+                            <li><a href="javascript:void(0)" value="servicos" onclick="showComponent(this)"><i class="fa-solid fa-address-book"></i> Meus Serviços</a></li>
+                            <li><a href="javascript:void(0)" value="todos-servicos" onclick="showComponent(this)"><i class="fa-solid fa-rectangle-list"></i> Todos Serviços</a></li>
+                            <% if (user.cargo == 1) {%>
+                                <li><a href="/servicos-novo"><i class="fa-solid fa-circle-plus"></i> Adicionar Novo</a></li>
+                                <% } %>
+                        </ul>
+                    </div>
+                    <div class="block">
+                        <h2><i class="fa-solid fa-user"></i> Usuário</h2>
+                        <ul>
+                            <li><a href="javascript:void(0)" value="user" onclick="showComponent(this)"><i class="fa-solid fa-user-pen"></i> Editar Perfil</a></li>
+                            <% if (user.cargo == 1) {%>
+                                <li><a href="javascript:void(0)" value="user-edit" onclick="showComponent(this)"><i class="fa-solid fa-user-gear"></i> Editar Usuários</a></li>
+                                <% } %>
+                        </ul>
+                    </div>
+                </div>
 
-        </div>
-    </header>
-    <div class="sidebar">
-        <div class="user-data">
-            <% if (user.img) {
-                %> <img src="<%=user.img%>" alt="Imagem do Usuário"> <%
-            }
-            else {
-                %> <img src="http://localhost:4000/static/images/user.png" alt="Imagem de Usuário"><%
-            }
-            %>
-            <h2><%=user.nome%></h2>
-            <p><%= cargo %></p>
-        </div>
-        <div class="list-items">
-            <div class="block">
-                <h2><i class="fa-solid fa-list"></i> Serviços</h2>
-                <ul>
-                    <li><a href="/servicos"><i class="fa-solid fa-address-book"></i> Meus Serviços</a></li>
-                    <li><a href="/servicos-todos"><i class="fa-solid fa-rectangle-list"></i> Todos Serviços</a></li>
-                    <% if (user.cargo == 1) {%>
-                        <li><a href="/servicos-novo"><i class="fa-solid fa-circle-plus"></i> Adicionar Novo</a></li>
-                    <% } %>
-                </ul>     
             </div>
-            <div class="block">
-                <h2><i class="fa-solid fa-user"></i> Usuário</h2>
-                <ul>
-                    <li><a href="/usuario"><i class="fa-solid fa-user-pen"></i> Editar Perfil</a></li>
-                    <% if (user.cargo == 1) {%>
-                        <li><a href="/usuario-edit"><i class="fa-solid fa-user-gear"></i> Editar Usuários</a></li>
-                    <% } %>
-                </ul>     
+
+            <div class="components">
+                <%- 
+                include('components/main', 
+                {idDiv: "user", action: "usuario-update", title: "Atualizar Usuário", label1: "Nome:", name1: "nome", placeholder1: "Insira seu nome de usuario", label2:"Email:", name2: "email", placeholder2: "Insira seu email", name3: "img", label3: "Imagem de Perfil:", placeholder3: "Insira a url da sua imagem", id: user.id, value: "Enviar!"});
+                %>
+                    <% if (user.cargo == 1) { %>
+                        <%- include('components/main', 
+                    {idDiv: "user-edit", action: "usuario-edit", title: "Editar usuarios", label1: "Nome:", name1: "nome", placeholder1: "Insira seu nome de usuario", label2:"Email:", name2: "email", placeholder2: "Insira seu email", name3: "img", label3: "Imagem de Perfil:", placeholder3: "Insira a url da sua imagem", id: user.id, value: "Enviar!"});%>
+                            <% } %>
             </div>
         </div>
 
-    </div>
+        <script src="https://kit.fontawesome.com/d9dda7c4a9.js" crossorigin="anonymous"></script>
+        <script src="http://localhost:4000/static/js/showComponents.js"></script>
+    </body>
 
-    <div class="center">
-
-    </div>
-    
-    <script src="https://kit.fontawesome.com/d9dda7c4a9.js" crossorigin="anonymous"></script>
-</body>
-</html>
+    </html>
